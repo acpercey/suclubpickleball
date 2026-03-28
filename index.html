@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syracuse Club Pickleball</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cuse-orange: #F76900;
+    --cuse-navy: #002244;
+    --cream: #FFF8F0;
+    --glow: rgba(247, 105, 0, 0.35);
+  }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cuse-navy);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── animated court-line background ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      /* centre line */
+      linear-gradient(to right, transparent calc(50% - 1px), rgba(255,255,255,.06) calc(50% - 1px), rgba(255,255,255,.06) calc(50% + 1px), transparent calc(50% + 1px)),
+      /* kitchen lines */
+      linear-gradient(to bottom, transparent calc(35% - 1px), rgba(255,255,255,.045) calc(35% - 1px), rgba(255,255,255,.045) calc(35% + 1px), transparent calc(35% + 1px)),
+      linear-gradient(to bottom, transparent calc(65% - 1px), rgba(255,255,255,.045) calc(65% - 1px), rgba(255,255,255,.045) calc(65% + 1px), transparent calc(65% + 1px)),
+      /* border */
+      linear-gradient(to right, transparent 8%, rgba(255,255,255,.04) 8%, rgba(255,255,255,.04) 8.3%, transparent 8.3%),
+      linear-gradient(to right, transparent 91.7%, rgba(255,255,255,.04) 91.7%, rgba(255,255,255,.04) 92%, transparent 92%),
+      linear-gradient(to bottom, transparent 10%, rgba(255,255,255,.04) 10%, rgba(255,255,255,.04) 10.4%, transparent 10.4%),
+      linear-gradient(to bottom, transparent 89.6%, rgba(255,255,255,.04) 89.6%, rgba(255,255,255,.04) 90%, transparent 90%);
+    z-index: 0;
+  }
+
+  /* floating ball accent */
+  .ball {
+    position: fixed;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 35%, #d4e842 0%, #b8cc20 50%, #8fa318 100%);
+    opacity: .08;
+    filter: blur(40px);
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+  }
+  .ball--1 { top: -60px; right: -40px; }
+  .ball--2 { bottom: -80px; left: -50px; animation-delay: -4s; width: 200px; height: 200px; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+  }
+
+  /* ── card ── */
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 92vw;
+    max-width: 420px;
+    padding: 48px 28px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    animation: fadeUp .7s ease-out both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── logo / avatar area ── */
+  .avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: var(--cuse-orange);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 0 0 4px var(--cuse-navy), 0 0 40px var(--glow);
+    position: relative;
+  }
+
+  .avatar svg { width: 58px; height: 58px; }
+
+  .title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 2.6rem);
+    letter-spacing: .06em;
+    color: var(--cream);
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    color: rgba(255,255,255,.5);
+    font-size: .9rem;
+    margin-top: -16px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    text-align: center;
+  }
+
+  /* ── link buttons ── */
+  .links { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+
+  .link-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 18px 22px;
+    border: 2px solid rgba(255,255,255,.12);
+    border-radius: 16px;
+    background: rgba(255,255,255,.04);
+    color: var(--cream);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.02rem;
+    letter-spacing: .01em;
+    transition: all .25s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .link-btn::after {
+    content: '→';
+    margin-left: auto;
+    opacity: .35;
+    font-size: 1.2rem;
+    transition: all .25s ease;
+  }
+
+  .link-btn:hover {
+    border-color: var(--cuse-orange);
+    background: rgba(247, 105, 0, .10);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(247, 105, 0, .15);
+  }
+
+  .link-btn:hover::after {
+    opacity: 1;
+    transform: translateX(4px);
+    color: var(--cuse-orange);
+  }
+
+  .link-btn:active { transform: scale(.98) translateY(0); }
+
+  /* icon circle inside button */
+  .link-icon {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+  }
+
+  .link-icon svg { width: 22px; height: 22px; }
+
+  .link-icon--donate {
+    background: rgba(247, 105, 0, .18);
+  }
+  .link-icon--donate svg { color: var(--cuse-orange); }
+
+  .link-icon--signup {
+    background: rgba(100, 200, 120, .15);
+  }
+  .link-icon--signup svg { color: #6ddb7f; }
+
+  .link-label { display: flex; flex-direction: column; gap: 2px; }
+  .link-label small {
+    font-weight: 400;
+    font-size: .78rem;
+    color: rgba(255,255,255,.4);
+  }
+
+  /* ── footer ── */
+  .footer {
+    color: rgba(255,255,255,.22);
+    font-size: .75rem;
+    letter-spacing: .05em;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="ball ball--1"></div>
+<div class="ball ball--2"></div>
+
+<div class="card">
+
+  <!-- Avatar / Logo -->
+  <div class="avatar">
+    <!-- pickleball paddle icon -->
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="30" cy="24" rx="18" ry="22" fill="#FFF8F0" opacity=".92"/>
+      <circle cx="30" cy="18" r="2.2" fill="#002244" opacity=".35"/>
+      <circle cx="24" cy="24" r="2.2" fill="#002244" opacity=".35"/>
+      <circle cx="36" cy="24" r="2.2" fill="#002244" opacity=".35"/>
+      <circle cx="30" cy="30" r="2.2" fill="#002244" opacity=".35"/>
+      <rect x="27" y="44" width="7" height="16" rx="3.5" fill="#FFF8F0" opacity=".85"/>
+    </svg>
+  </div>
+
+  <h1 class="title">Syracuse Club<br>Pickleball</h1>
+  <p class="subtitle">🍊&ensp;Get ready for some pickleball!&ensp;🏓</p>
+
+  <div class="links">
+
+    <!-- Donate -->
+    <a class="link-btn"
+       href="https://www.gofundme.com/f/help-launch-syracuse-club-pickleball/cl/s?utm_campaign=fp_sharesheet&utm_content=amp17_td-amp20_t2&utm_medium=customer&utm_source=copy_link&lang=en_US&attribution_id=sl%3Ad6045d0f-da96-4c42-ba5f-0e801bc20083&ts=1774660470"
+       target="_blank" rel="noopener">
+      <span class="link-icon link-icon--donate">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </span>
+      <span class="link-label">
+        Donate to the Club
+        <small>GoFundMe — Help us launch</small>
+      </span>
+    </a>
+
+    <!-- Sign Up -->
+    <a class="link-btn"
+       href="https://docs.google.com/forms/d/e/1FAIpQLScYKYqeuhCxVY1M5TSkp5Tp8yHBwaFulSEz2I07kzDFy9jl-g/viewform?usp=header"
+       target="_blank" rel="noopener">
+      <span class="link-icon link-icon--signup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+      </span>
+      <span class="link-label">
+        Sign Up for the Club
+        <small>Google Form — Join us</small>
+      </span>
+    </a>
+
+  </div>
+
+  <p class="footer">SYRACUSE UNIVERSITY CLUB PICKLEBALL</p>
+
+</div>
+
+</body>
+</html>
