@@ -16,18 +16,19 @@
     --glow: rgba(247, 105, 0, 0.35);
   }
 
+  html { scroll-behavior: smooth; }
+
   body {
     min-height: 100dvh;
     display: flex;
-    align-items: center;
     justify-content: center;
     font-family: 'DM Sans', sans-serif;
     background: var(--cuse-navy);
-    overflow: hidden;
+    padding: 32px 0;
     position: relative;
   }
 
-  /* ── animated court-line background ── */
+  /* animated court-line background */
   body::before {
     content: '';
     position: fixed;
@@ -44,6 +45,7 @@
       linear-gradient(to bottom, transparent 10%, rgba(255,255,255,.04) 10%, rgba(255,255,255,.04) 10.4%, transparent 10.4%),
       linear-gradient(to bottom, transparent 89.6%, rgba(255,255,255,.04) 89.6%, rgba(255,255,255,.04) 90%, transparent 90%);
     z-index: 0;
+    pointer-events: none;
   }
 
   /* floating ball accent */
@@ -57,6 +59,7 @@
     filter: blur(40px);
     animation: float 8s ease-in-out infinite;
     z-index: 0;
+    pointer-events: none;
   }
   .ball--1 { top: -60px; right: -40px; }
   .ball--2 { bottom: -80px; left: -50px; animation-delay: -4s; width: 200px; height: 200px; }
@@ -66,13 +69,14 @@
     50% { transform: translateY(-30px); }
   }
 
-  /* ── card ── */
+  /* card */
   .card {
     position: relative;
     z-index: 1;
     width: 92vw;
     max-width: 420px;
-    padding: 48px 28px 40px;
+    margin: auto;
+    padding: 16px 28px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,7 +89,7 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── logo / avatar area ── */
+  /* logo / avatar area */
   .avatar {
     width: 110px;
     height: 110px;
@@ -95,6 +99,7 @@
     place-items: center;
     box-shadow: 0 0 0 4px var(--cuse-navy), 0 0 40px var(--glow);
     position: relative;
+    flex-shrink: 0;
   }
 
   .avatar img {
@@ -122,7 +127,7 @@
     text-align: center;
   }
 
-  /* ── link buttons ── */
+  /* shared link styling */
   .links { display: flex; flex-direction: column; gap: 16px; width: 100%; }
 
   .link-btn {
@@ -147,7 +152,7 @@
   }
 
   .link-btn::after {
-    content: '→';
+    content: '\2192';
     margin-left: auto;
     opacity: .35;
     font-size: 1.2rem;
@@ -181,15 +186,14 @@
 
   .link-icon svg { width: 22px; height: 22px; }
 
-  .link-icon--donate {
-    background: rgba(247, 105, 0, .18);
-  }
+  .link-icon--donate { background: rgba(247, 105, 0, .18); }
   .link-icon--donate svg { color: var(--cuse-orange); }
 
-  .link-icon--signup {
-    background: rgba(100, 200, 120, .15);
-  }
+  .link-icon--signup { background: rgba(100, 200, 120, .15); }
   .link-icon--signup svg { color: #6ddb7f; }
+
+  .link-icon--schedule { background: rgba(180, 130, 255, .15); }
+  .link-icon--schedule svg { color: #b482ff; }
 
   .link-label { display: flex; flex-direction: column; gap: 2px; }
   .link-label small {
@@ -198,12 +202,83 @@
     color: rgba(255,255,255,.4);
   }
 
-  /* ── footer ── */
+  /* two-up social tiles */
+  .socials {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .tile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 13px 10px;
+    border: 2px solid rgba(255,255,255,.12);
+    border-radius: 14px;
+    background: rgba(255,255,255,.04);
+    color: var(--cream);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: .92rem;
+    text-align: center;
+    transition: all .25s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .tile svg { width: 19px; height: 19px; flex-shrink: 0; }
+
+  .tile:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,.07);
+  }
+
+  .tile:active { transform: scale(.98) translateY(0); }
+
+  .tile--ig:hover {
+    border-color: #E1306C;
+    box-shadow: 0 8px 30px rgba(225, 48, 108, .18);
+  }
+  .tile--ig svg { color: #E1306C; }
+
+  .tile--gm:hover {
+    border-color: #00AEF0;
+    box-shadow: 0 8px 30px rgba(0, 174, 240, .18);
+  }
+  .tile--gm svg { color: #00AEF0; }
+
+  /* keyboard focus */
+  .link-btn:focus-visible,
+  .tile:focus-visible {
+    outline: 3px solid var(--cuse-orange);
+    outline-offset: 3px;
+  }
+
+  /* footer */
   .footer {
     color: rgba(255,255,255,.22);
     font-size: .75rem;
     letter-spacing: .05em;
     text-align: center;
+  }
+
+  /* tighter spacing on short screens */
+  @media (max-height: 760px) {
+    .card { gap: 20px; padding-top: 8px; }
+    .avatar { width: 88px; height: 88px; }
+    .link-btn { padding: 14px 20px; }
+    .tile { padding: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
   }
 </style>
 </head>
@@ -222,6 +297,25 @@
   <h1 class="title">Syracuse Club<br>Pickleball</h1>
   <p class="subtitle">🍊&ensp;Let's play some pickleball!&ensp;🏓</p>
 
+  <!-- Instagram + GroupMe, side by side -->
+  <div class="socials">
+
+    <a class="tile tile--ig"
+       href="https://www.instagram.com/cuseclubpickleball/"
+       target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      Instagram
+    </a>
+
+    <a class="tile tile--gm"
+       href="http://groupme.com/join_group/114164924/5GA3cr3o"
+       target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      GroupMe
+    </a>
+
+  </div>
+
   <div class="links">
 
     <!-- Sign Up -->
@@ -233,10 +327,23 @@
       </span>
       <span class="link-label">
         Sign Up for the Club
-        <small>Google Form: Join us!</small>
+        <small>Google Form, join us</small>
       </span>
     </a>
-   
+
+    <!-- Schoolyard Sports -->
+    <a class="link-btn"
+       href="https://syracusepickleball.schoolyardsocial.co/discover"
+       target="_blank" rel="noopener">
+      <span class="link-icon link-icon--schedule">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </span>
+      <span class="link-label">
+        Find Games &amp; Events
+        <small>Schoolyard Sports</small>
+      </span>
+    </a>
+
     <!-- Donate -->
     <a class="link-btn"
        href="https://www.gofundme.com/f/help-launch-syracuse-club-pickleball/cl/s?utm_campaign=fp_sharesheet&utm_content=amp17_td-amp20_t2&utm_medium=customer&utm_source=copy_link&lang=en_US&attribution_id=sl%3Ad6045d0f-da96-4c42-ba5f-0e801bc20083&ts=1774660470"
@@ -246,36 +353,10 @@
       </span>
       <span class="link-label">
         Donate to the Club
-        <small>GoFundMe: Help us grow</small>
+        <small>GoFundMe, help us launch</small>
       </span>
     </a>
 
-    <!-- GroupMe -->
-<a class="link-btn"
-   href="http://groupme.com/join_group/114164924/5GA3cr3o"
-   target="_blank" rel="noopener">
-  <span class="link-icon" style="background: rgba(0, 174, 240, .15);">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#00AEF0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-  </span>
-  <span class="link-label">
-    Join the GroupMe
-    <small>Group chat: Stay in the loop</small>
-  </span>
-</a>
-   
-    <!-- Schoolyard Sports -->
- <a class="link-btn"
-    href="https://syracusepickleball.schoolyardsocial.co/discover"
-    target="_blank" rel="noopener">
-   <span class="link-icon" style="background: rgba(180, 130, 255, .15);">
-     <svg viewBox="0 0 24 24" fill="none" stroke="#b482ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-   </span>
-   <span class="link-label">
-     Find Games & Events
-     <small>Schoolyard Sports: Discover</small>
-   </span>
- </a>
-   
   </div>
 
   <p class="footer">SYRACUSE UNIVERSITY CLUB PICKLEBALL</p>
